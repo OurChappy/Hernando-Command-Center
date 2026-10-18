@@ -12,8 +12,6 @@ on:
         required: true
         default: false
         type: boolean
-  schedule:
-    - cron: '17 2 * * 1'
 permissions:
   contents: read
 jobs:
@@ -26,10 +24,13 @@ jobs:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p 'test_registry_sync.py' -v
   reconcile:
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'workflow_dispatch'
     needs: unit-tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    concurrency:
+      group: project-gpt-os-registry-write
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
