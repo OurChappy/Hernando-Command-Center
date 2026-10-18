@@ -1,0 +1,45 @@
+name: Engineering granular task
+description: Propose one independently verifiable implementation action
+title: "[Engineering] "
+labels: []
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent issue and granular action
+      description: "Example: #21 / P1-21.02"
+      placeholder: "#21 / P1-21.02"
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Observable outcome and bounded scope
+      description: Define one deliverable, exact allowed repository and paths
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and existing reuse
+      description: "Link prerequisite issues, open PRs and canonical IDs; use UNKNOWN when not verified"
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance and negative tests
+      description: Include commands or assertions and failure handling
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and safety gates
+      value: |
+        - [ ] Exact tested HEAD SHA recorded
+        - [ ] Executed commands and actual outcomes
+        - [ ] CI URLs/conclusions or UNKNOWN
+        - [ ] No merge/deploy/production writes/permissions/Railway
+    validations:
+      required: true
