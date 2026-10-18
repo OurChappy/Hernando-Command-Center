@@ -1,0 +1,45 @@
+name: Project GPT OS — Manual Dry Run Bootstrap
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout reviewed registry implementation
+        uses: actions/checkout@v7
+        with:
+          ref: 277eb9a09a146643176fc2c9ce7db21838f72fcf
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Compile and test
+        run: |
+          python -m compileall -q registry tests
+          python -m unittest discover -s tests -p 'test_registry_*.py' -v
+      - name: Validate secret presence (never print values)
+        env:
+          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          missing=0
+          for name in REGISTRY_GITHUB_TOKEN DROPBOX_ACCESS_TOKEN SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY; do
+            if [ -z "${!name}" ]; then
+              echo "::error title=Missing configuration::${name} is not configured"
+              missing=1
+            fi
+          done
+          exit "$missing"
+      - name: Read-only inventory reconciliation (no apply)
+        env:
+          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python -m registry.sync
+# No schedule, no --apply, no artifact upload, no branch input.
