@@ -1,0 +1,29 @@
+name: Repository health inventory (read only)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 21 * * 0'
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect read-only repository metadata
+        env:
+          GH_PORTFOLIO_TOKEN: ${{ secrets.GH_PORTFOLIO_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          AUDIT_OWNER: OurChappy
+        run: python scripts/repository_health.py
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository-health
+          path: reports/repository-health/
+          if-no-files-found: warn
