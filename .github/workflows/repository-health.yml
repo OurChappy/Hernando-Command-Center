@@ -3,10 +3,25 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '23 21 * * 0'
+  pull_request:
+    paths:
+      - 'scripts/repository_health.py'
+      - 'tests/test_repository_health.py'
+      - '.github/workflows/repository-health.yml'
 permissions:
   contents: read
 jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p test_repository_health.py -v
   inventory:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -17,8 +32,8 @@ jobs:
       - name: Collect read-only repository metadata
         env:
           GH_PORTFOLIO_TOKEN: ${{ secrets.GH_PORTFOLIO_TOKEN }}
-          GITHUB_TOKEN: ${{ github.token }}
           AUDIT_OWNER: OurChappy
+          EXPECTED_REPO_COUNT: '15'
         run: python scripts/repository_health.py
       - name: Upload report artifact
         if: always()
