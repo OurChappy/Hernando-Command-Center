@@ -1,0 +1,32 @@
+name: Data dictionary drift (offline validation)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'tools/data_dictionary/**'
+      - 'tests/test_data_dictionary_drift.py'
+      - '.github/workflows/data-dictionary-drift.yml'
+permissions:
+  contents: read
+jobs:
+  offline-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test deterministic drift detection
+        run: python -m unittest discover -s tests -p 'test_data_dictionary_drift.py' -v
+      - name: Demonstrate zero drift on synthetic fixture
+        run: |
+          mkdir -p reports
+          printf '[{"schema":"public","table":"projects","column":"id","type":"uuid","nullable":false}]\n' > /tmp/dictionary-physical.json
+          cp /tmp/dictionary-physical.json /tmp/dictionary-catalogue.json
+          python -m tools.data_dictionary.drift --physical /tmp/dictionary-physical.json --catalogued /tmp/dictionary-catalogue.json --output reports/dictionary-drift.json --fail-on-drift
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-data-dictionary-drift
+          path: reports/dictionary-drift.json
+          retention-days: 7
