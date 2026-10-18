@@ -1,0 +1,44 @@
+{
+  "agent": "architecture-reviewer",
+  "subject": "Issue #20 — file-level PR ownership and compatibility",
+  "observedSha": "cdafffa5c26cdc56d5d82e661b8513e83792c5f6",
+  "findings": [
+    {
+      "statement": "PR #2 adds portfolio/dispatcher.py and offline tests; it is not present on main.",
+      "evidenceLevel": "VERIFIED",
+      "reference": "https://github.com/OurChappy/Hernando-Command-Center/pull/2"
+    },
+    {
+      "statement": "PR #14 adds portfolio/idea_intake.py; PR #15 adds portfolio/v4/exporter.py plus cycle/artefact schemas. Distinct paths do not establish compatibility.",
+      "evidenceLevel": "VERIFIED",
+      "reference": "https://github.com/OurChappy/Hernando-Command-Center/pull/15"
+    },
+    {
+      "statement": "PR #42 is a proposed plan; PR #43 adds AGENTS.md/templates; PR #44 is stacked on #43 and thus cannot be treated as independently merged.",
+      "evidenceLevel": "VERIFIED",
+      "reference": "https://github.com/OurChappy/Hernando-Command-Center/pull/44"
+    },
+    {
+      "statement": "Changed-path overlap across nine draft PRs is zero based on current GitHub filename lists, but no complete source-level interface audit was performed.",
+      "evidenceLevel": "VERIFIED",
+      "reference": "https://github.com/OurChappy/Hernando-Command-Center/pulls"
+    },
+    {
+      "statement": "Selected portfolio module files are absent from main, confirming draft code is not yet active default-branch implementation.",
+      "evidenceLevel": "VERIFIED",
+      "reference": "https://github.com/OurChappy/Hernando-Command-Center"
+    }
+  ],
+  "missingEvidence": [
+    "Read actual full source interfaces and imports for PRs #2/#14/#15",
+    "Dependency graph and conflict/rebase assessment across draft branch heads",
+    "Evaluate migration path for existing registry ids; no database inspection was performed in this pilot",
+    "Exact-head CI runs for each referenced implementation PR and current default-branch integration tests"
+  ],
+  "verdict": "HOLD",
+  "recommendations": [
+    "Propose ownership: portfolio/dispatcher.py as offline planner, portfolio/idea_intake.py as intake, portfolio/v4 as schema/export; validate imports and contracts before adoption.",
+    "Review PR #42 and #43 before admitting v1.1 dependency; keep #44 stacked and draft until its base is approved.",
+    "Build an interface-level compatibility table for #2/#14/#15 with synthetic contract tests, then record an ADR that explicitly rejects parallel dispatcher implementations."
+  ]
+}
