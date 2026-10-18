@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "source": "live GitHub repository metadata 2026-10-18",
+  "policy": "documentation_only",
+  "no_repository_mutations": true,
+  "repositories": [
+    {
+      "full_name": "OurChappy/agentskills",
+      "github_repository_id": "1216754007",
+      "default_branch": "main",
+      "role": "skills",
+      "recommended_project": "AGENTS_PLUGINS",
+      "decision": "review",
+      "visibility": "public",
+      "project_mapping_approval_required": true
+    },
+    {
+      "full_name": "OurChappy/stripe-python",
+      "github_repository_id": "1216796541",
+      "default_branch": "master",
+      "role": "external-sdk-reference",
+      "recommended_project": null,
+      "decision": "review-provenance",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/ui",
+      "github_repository_id": "1240362032",
+      "default_branch": "main",
+      "role": "ui-library",
+      "recommended_project": null,
+      "decision": "review",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/portalflow-ai",
+      "github_repository_id": "1245312722",
+      "default_branch": "main",
+      "role": "app-experiment",
+      "recommended_project": null,
+      "decision": "review",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/Chatgpt",
+      "github_repository_id": "1300137730",
+      "default_branch": "main",
+      "role": "workflow-definitions",
+      "recommended_project": "AGENTS_PLUGINS",
+      "decision": "proposed-link",
+      "visibility": "public",
+      "project_mapping_approval_required": true
+    },
+    {
+      "full_name": "OurChappy/Script-Station",
+      "github_repository_id": "1340726659",
+      "default_branch": "main",
+      "role": "primary-application",
+      "recommended_project": "SCRIPT_STATION",
+      "decision": "preserve",
+      "visibility": "private",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/Portfolio",
+      "github_repository_id": "1342279116",
+      "default_branch": "main",
+      "role": "career-portfolio",
+      "recommended_project": "CAREER_LEARNING",
+      "decision": "preserve",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/Advanced-Power-BI-Projects",
+      "github_repository_id": "1348064798",
+      "default_branch": "main",
+      "role": "analytics-portfolio",
+      "recommended_project": "CAREER_LEARNING",
+      "decision": "preserve",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/acnc-nonprofit-analytics-study-case",
+      "github_repository_id": "1348627667",
+      "default_branch": "main",
+      "role": "analytics-study-case",
+      "recommended_project": "CAREER_LEARNING",
+      "decision": "proposed-link",
+      "visibility": "public",
+      "project_mapping_approval_required": true
+    },
+    {
+      "full_name": "OurChappy/EducationDataProduct-au",
+      "github_repository_id": "1349515481",
+      "default_branch": "main",
+      "role": "education-data-product",
+      "recommended_project": "GOODTURN",
+      "decision": "preserve",
+      "visibility": "private",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/tafe-browser-mcp",
+      "github_repository_id": "1351223629",
+      "default_branch": "main",
+      "role": "mcp-integration",
+      "recommended_project": "AGENTS_PLUGINS",
+      "decision": "preserve",
+      "visibility": "private",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/Hernando-Command-Center",
+      "github_repository_id": "1366820544",
+      "default_branch": "main",
+      "role": "central-registry",
+      "recommended_project": null,
+      "decision": "review-project-link",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/LittleGrumble.github.io",
+      "github_repository_id": "1415417107",
+      "default_branch": "main",
+      "role": "site-experiment",
+      "recommended_project": null,
+      "decision": "review",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/goodturn-brand",
+      "github_repository_id": "1415950693",
+      "default_branch": "main",
+      "role": "goodturn-brand-site",
+      "recommended_project": "GOODTURN",
+      "decision": "preserve",
+      "visibility": "private",
+      "project_mapping_approval_required": false
+    },
+    {
+      "full_name": "OurChappy/skills-copilot-codespaces-vscode",
+      "github_repository_id": "1417499547",
+      "default_branch": "main",
+      "role": "empty-or-uninitialised",
+      "recommended_project": null,
+      "decision": "inspect-before-archive",
+      "visibility": "public",
+      "project_mapping_approval_required": false
+    }
+  ],
+  "pr_workstreams": [
+    {
+      "key": "REGISTRY",
+      "prs": [
+        55,
+        56
+      ],
+      "action": "review independent proposal inventories; reconcile duplicate proposals, source IDs and mappings before ingestion"
+    },
+    {
+      "key": "CONSOLE",
+      "prs": [
+        52,
+        53,
+        57
+      ],
+      "action": "compare overlapping explorers/adapters; #57 describes carrying #53 changes; confirm supersession only after diff/review"
+    },
+    {
+      "key": "AGENT_BUILDER",
+      "prs": [
+        22,
+        45,
+        50,
+        51
+      ],
+      "action": "construct dependency sequence, avoid merging stacked changes out of order, maintain one acceptance checklist"
+    },
+    {
+      "key": "EDUCAGEN",
+      "prs": [
+        19,
+        20
+      ],
+      "action": "stacked prototype; keep separate from core OS"
+    },
+    {
+      "key": "CI",
+      "prs": [
+        24
+      ],
+      "action": "evaluate existing CI consolidation and required-check compatibility before altering workflows"
+    }
+  ],
+  "status_note": "PR numbers are snapshots from search, not a complete or authoritative list of all open PRs."
+}

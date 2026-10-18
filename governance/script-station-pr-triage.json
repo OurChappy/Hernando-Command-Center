@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "source_repository": "OurChappy/Script-Station",
+  "governance_directory": "governance/repository-directory.json",
+  "snapshot_date": "2026-10-18",
+  "mode": "read_only",
+  "production_writes": 0,
+  "open_pr_numbers": [
+    57,
+    56,
+    55,
+    53,
+    52,
+    51,
+    50,
+    45,
+    30,
+    25,
+    24,
+    22,
+    20,
+    19,
+    18,
+    17,
+    16,
+    15,
+    4,
+    2,
+    1
+  ],
+  "workstreams": {
+    "console": [
+      57,
+      53,
+      52
+    ],
+    "registry": [
+      56,
+      55
+    ],
+    "agent_builder": [
+      51,
+      50,
+      45,
+      22
+    ],
+    "educagen": [
+      20,
+      19
+    ],
+    "portfolio_os": [
+      18,
+      17,
+      16,
+      15,
+      4,
+      2
+    ],
+    "ci": [
+      24
+    ],
+    "security": [
+      25
+    ],
+    "optional_ingestion": [
+      30
+    ],
+    "other": [
+      1
+    ]
+  },
+  "verified_changed_files": {
+    "24": [
+      ".github/workflows/pr-quality-gate.yml",
+      ".github/workflows/project-gpt-os-quality.yml"
+    ],
+    "50": [
+      ".github/workflows/agent-builder-contract.yml",
+      "08-AGENTS/agent-builder/IMPLEMENTATION_PLAN.md",
+      "08-AGENTS/agent-builder/fixtures/invalid-agent-card.json",
+      "08-AGENTS/agent-builder/fixtures/valid-agent-card.json",
+      "08-AGENTS/agent-builder/requirements-test.txt",
+      "08-AGENTS/agent-builder/schemas/agent-build-card.schema.json",
+      "08-AGENTS/agent-builder/scripts/validate_card.py",
+      "08-AGENTS/agent-builder/tests/test_card_contract.py",
+      "08-AGENTS/agent-builder/tests/test_json_schema.py"
+    ],
+    "51": [
+      "08-AGENTS/agent-builder/GITHUB_LIVE_DISCOVERY.md",
+      "08-AGENTS/agent-builder/GITHUB_SNAPSHOT.md",
+      "08-AGENTS/agent-builder/READONLY_DISCOVERY.md",
+      "08-AGENTS/agent-builder/scripts/discover_cards.py",
+      "08-AGENTS/agent-builder/scripts/github_discovery.py",
+      "08-AGENTS/agent-builder/scripts/github_snapshot.py",
+      "08-AGENTS/agent-builder/tests/test_discovery.py",
+      "08-AGENTS/agent-builder/tests/test_github_discovery.py",
+      "08-AGENTS/agent-builder/tests/test_github_snapshot.py"
+    ],
+    "52": [
+      ".github/workflows/portfolio-explorer.yml",
+      "tools/portfolio_explorer/README.md",
+      "tools/portfolio_explorer/fixture.js",
+      "tools/portfolio_explorer/index.html",
+      "tools/portfolio_explorer/test_explorer.py"
+    ],
+    "53": [
+      "06-TESTS/test_registry_compat.py",
+      "docs/project-gpt-os/REPOSITORY-CONSOLIDATION.md",
+      "tools/registry_compat.py"
+    ],
+    "55": [
+      ".github/workflows/registry-completion-qa.yml",
+      "tools/registry_completion/README.md",
+      "tools/registry_completion/proposals.json",
+      "tools/registry_completion/test_proposals.py",
+      "tools/registry_completion/validate.py"
+    ],
+    "56": [
+      ".github/workflows/registry-discovery-phase2.yml",
+      "tools/registry_completion_phase2/README.md",
+      "tools/registry_completion_phase2/findings.json",
+      "tools/registry_completion_phase2/test_findings.py",
+      "tools/registry_completion_phase2/validate.py"
+    ],
+    "57": [
+      "06-TESTS/test_registry_compat.py",
+      "app/console/ConsoleClient.tsx",
+      "app/console/registry/page.tsx",
+      "docs/project-gpt-os/REPOSITORY-CONSOLIDATION.md",
+      "package.json",
+      "tests/unified-console/registry-preview.test.mjs",
+      "tools/registry_compat.py"
+    ]
+  },
+  "commit_ci_samples": {
+    "24": [
+      [
+        "CI",
+        "success",
+        39106513884
+      ]
+    ],
+    "50": [
+      [
+        "Agent Builder Contract",
+        "success",
+        39113873957
+      ],
+      [
+        "PR quality gate",
+        "success",
+        39113873880
+      ]
+    ],
+    "51": [
+      [
+        "Agent Builder Contract",
+        "success",
+        39114160874
+      ],
+      [
+        "PR quality gate",
+        "success",
+        39114160867
+      ]
+    ],
+    "52": [
+      [
+        "Portfolio Explorer (fixture QA)",
+        "success",
+        39115026809
+      ],
+      [
+        "PR quality gate",
+        "success",
+        39115026723
+      ]
+    ],
+    "53": [
+      [
+        "PR quality gate",
+        "success",
+        39115247222
+      ]
+    ],
+    "55": [
+      [
+        "Registry Completion Proposal QA",
+        "success",
+        39116013028
+      ],
+      [
+        "PR quality gate",
+        "success",
+        39116013014
+      ]
+    ],
+    "56": [
+      [
+        "Registry Discovery Phase 2 QA",
+        "success",
+        39116161187
+      ],
+      [
+        "PR quality gate",
+        "success",
+        39116161160
+      ]
+    ],
+    "57": [
+      [
+        "PR quality gate",
+        "success",
+        39116238988
+      ]
+    ]
+  },
+  "confirmed_dependencies": [
+    {
+      "pr": 51,
+      "depends_on": 50,
+      "reason": "base branch feat/agent-builder-five-iteration-contract"
+    },
+    {
+      "pr": 20,
+      "depends_on": 19,
+      "reason": "stacked base described in PR body; verify live base before action"
+    }
+  ],
+  "overlap_findings": [
+    {
+      "prs": [
+        53,
+        57
+      ],
+      "shared_files": [
+        "06-TESTS/test_registry_compat.py",
+        "docs/project-gpt-os/REPOSITORY-CONSOLIDATION.md",
+        "tools/registry_compat.py"
+      ],
+      "assessment": "probable_supersession",
+      "action": "diff content and test preservation; do not close automatically"
+    },
+    {
+      "prs": [
+        52,
+        57
+      ],
+      "shared_files": [],
+      "assessment": "functional_overlap_only",
+      "action": "evaluate whether standalone fixture explorer remains useful"
+    },
+    {
+      "prs": [
+        55,
+        56
+      ],
+      "shared_files": [],
+      "assessment": "complementary_catalogues",
+      "action": "reconcile proposals by original source identity, not name"
+    }
+  ],
+  "ci_note": "CI covers eight selected head commits; remaining PRs were not individually checked; success does not prove merge readiness.",
+  "safety": {
+    "close_prs": false,
+    "merge_prs": false,
+    "deploy": false,
+    "railway": false,
+    "permissions_change": false
+  }
+}
