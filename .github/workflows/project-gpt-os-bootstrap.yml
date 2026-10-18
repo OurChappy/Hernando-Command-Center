@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  id-token: write
 jobs:
   dry-run:
     runs-on: ubuntu-latest
@@ -20,26 +21,27 @@ jobs:
         run: |
           python -m compileall -q registry tests
           python -m unittest discover -s tests -p 'test_registry_*.py' -v
-      - name: Validate secret presence (never print values)
+      - name: GitHub OIDC authenticated inventory dry run
         env:
-          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
-          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          INVENTORY_URL: https://sbdzvjqwslwaqdqyrbfn.supabase.co/functions/v1/project-gpt-os-inventory
         run: |
-          missing=0
-          for name in REGISTRY_GITHUB_TOKEN DROPBOX_ACCESS_TOKEN SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY; do
-            if [ -z "${!name}" ]; then
-              echo "::error title=Missing configuration::${name} is not configured"
-              missing=1
-            fi
-          done
-          exit "$missing"
-      - name: Read-only inventory reconciliation (no apply)
-        env:
-          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
-          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: python -m registry.sync
-# No schedule, no --apply, no artifact upload, no branch input.
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          audience="project-gpt-os-registry-reader"
+          request_url=os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"]
+          separator="&" if "?" in request_url else "?"
+          url=request_url+separator+urllib.parse.urlencode({"audience":audience})
+          request=urllib.request.Request(url,headers={"Authorization":"Bearer "+os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]})
+          with urllib.request.urlopen(request,timeout=20) as response:
+              jwt=json.load(response)["value"]
+          request=urllib.request.Request(os.environ["INVENTORY_URL"],headers={"Authorization":"Bearer "+jwt})
+          with urllib.request.urlopen(request,timeout=30) as response:
+              inventory=json.load(response)
+          sources=inventory.get("sources")
+          if not isinstance(sources,list):
+              raise RuntimeError("Missing inventory sources")
+          keys=[(x.get("provider"),x.get("external_id")) for x in sources]
+          if len(keys)!=50 or len(set(keys))!=len(keys):
+              raise RuntimeError("Inventory differs from approved 50-source baseline; review before release")
+          print("OIDC verified read-only inventory: 50 unique sources.")
+          PY
