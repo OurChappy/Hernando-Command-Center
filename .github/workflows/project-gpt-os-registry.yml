@@ -1,5 +1,10 @@
 name: Project GPT OS Registry
 on:
+  pull_request:
+    paths:
+      - 'registry/**'
+      - 'tests/test_registry_sync.py'
+      - '.github/workflows/project-gpt-os-registry.yml'
   workflow_dispatch:
     inputs:
       apply:
@@ -12,7 +17,17 @@ on:
 permissions:
   contents: read
 jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_registry_sync.py' -v
   reconcile:
+    if: github.event_name != 'pull_request'
+    needs: unit-tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
