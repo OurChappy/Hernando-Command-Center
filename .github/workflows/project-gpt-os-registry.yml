@@ -64,6 +64,15 @@ jobs:
         run: python -m compileall -q registry tests
       - name: Run registry unit tests
         run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
+      - name: Block production writes until acceptance is explicitly enabled
+        env:
+          APPLY: ${{ inputs.apply || 'false' }}
+          REGISTRY_WRITE_ENABLED: ${{ vars.REGISTRY_WRITE_ENABLED || 'false' }}
+        run: |
+          if [ "$APPLY" = "true" ] && [ "$REGISTRY_WRITE_ENABLED" != "true" ]; then
+            echo "::error title=Write gate closed::Set repository variable REGISTRY_WRITE_ENABLED=true only after reviewing authenticated dry-run and baseline evidence."
+            exit 1
+          fi
       - name: Validate integration configuration
         env:
           REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
