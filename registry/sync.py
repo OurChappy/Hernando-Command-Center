@@ -49,6 +49,16 @@ def main(apply=False):
     refs=read("registry_external_refs","provider,external_id")
     discovered=github(os.environ["REGISTRY_GITHUB_TOKEN"],os.getenv("GITHUB_OWNER","OurChappy"))+dropbox(os.environ["DROPBOX_ACCESS_TOKEN"])
     new=reconcile(refs,discovered)
+    # Fail closed on incomplete inventory or unreviewed writes. These are
+    # release baselines, not a claim that inventories can never change.
+    counts={p:sum(x["provider"]==p for x in discovered)
+            for p in ("github","dropbox")}
+    if apply:
+        if counts["github"] < 15 or counts["dropbox"] < 35:
+            raise RuntimeError("Incomplete provider inventory; controlled write blocked")
+        expected=os.getenv("REGISTRY_APPROVED_NEW_COUNT")
+        if expected is None or not expected.isdecimal() or int(expected)!=len(new):
+            raise RuntimeError("Proposed count differs from explicitly approved count; write blocked")
     # GitHub Actions artifacts must never contain private paths, names or external IDs.
     report={"dry_run":not apply,"discovered":len(discovered),"existing_refs":len(refs),"new":len(new),
             "proposed_counts":{provider:sum(x["provider"]==provider for x in new)
