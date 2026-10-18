@@ -19,6 +19,15 @@ def propose(idea, inventory):
         raise ValueError("Evidence records must carry URL and classification")
     if not re.fullmatch(r"[\w.-]+/[\w.-]+", str(idea["repository"])):
         raise ValueError("Invalid repository")
+    if not all(isinstance(task, dict) for task in idea["tasks"]):
+        raise ValueError("Each task must be an object")
+    for task in idea["tasks"]:
+        deps = task.get("depends_on", [])
+        if not isinstance(deps, list) or not all(isinstance(dep, str) and dep for dep in deps):
+            raise ValueError("Task dependencies must be a list of nonempty IDs")
+        acceptance = task.get("acceptance")
+        if not isinstance(acceptance, list) or not acceptance or not all(isinstance(a, str) and a.strip() for a in acceptance):
+            raise ValueError("Task acceptance must be a list of nonempty strings")
     ids = [task.get("id") for task in idea["tasks"]]
     if not all(isinstance(i, str) and i for i in ids) or len(set(ids)) != len(ids):
         raise ValueError("Missing/duplicate task ids")
