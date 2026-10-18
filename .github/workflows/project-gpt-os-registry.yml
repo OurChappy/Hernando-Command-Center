@@ -30,6 +30,22 @@ jobs:
         run: python -m compileall -q registry tests
       - name: Run registry unit tests
         run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
+      - name: Reject unauthenticated inventory requests (deployed endpoint)
+        env:
+          INVENTORY_URL: https://sbdzvjqwslwaqdqyrbfn.supabase.co/functions/v1/project-gpt-os-inventory
+        run: |
+          python - <<'PY'
+          import os, urllib.request, urllib.error
+          url=os.environ["INVENTORY_URL"]
+          for method, expected in (("GET",401),("POST",405)):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url,method=method),timeout=20) as response:
+                      raise AssertionError(f"{method}: returned successful status {response.status}")
+              except urllib.error.HTTPError as error:
+                  if error.code != expected:
+                      raise AssertionError(f"{method}: expected {expected}, got {error.code}")
+                  print(f"{method}: denied with {error.code}")
+          PY
   reconcile:
     if: github.event_name == 'workflow_dispatch'
     needs: unit-tests
