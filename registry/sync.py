@@ -54,7 +54,8 @@ def main(apply=False):
     counts={p:sum(x["provider"]==p for x in discovered)
             for p in ("github","dropbox")}
     if apply:
-        if counts["github"] < 15 or counts["dropbox"] < 35:
+        if (counts["github"] < int(os.getenv("REGISTRY_MIN_GITHUB_COUNT","15"))
+                or counts["dropbox"] < int(os.getenv("REGISTRY_MIN_DROPBOX_COUNT","35"))):
             raise RuntimeError("Incomplete provider inventory; controlled write blocked")
         expected=os.getenv("REGISTRY_APPROVED_NEW_COUNT")
         if expected is None or not expected.isdecimal() or int(expected)!=len(new):
