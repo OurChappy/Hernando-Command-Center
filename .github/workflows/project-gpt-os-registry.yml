@@ -37,6 +37,21 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p 'test_registry_sync.py' -v
+      - name: Validate integration configuration
+        env:
+          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          missing=0
+          for name in REGISTRY_GITHUB_TOKEN DROPBOX_ACCESS_TOKEN SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY; do
+            if [ -z "${!name}" ]; then
+              echo "::error title=Missing configuration::${name} is not configured"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then exit 1; fi
       - name: Sync inventory
         env:
           REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
