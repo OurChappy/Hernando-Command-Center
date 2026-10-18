@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OurChappy independent quality review v1.1",
+  "type": "object",
+  "required": [
+    "agent",
+    "subject",
+    "observedSha",
+    "findings",
+    "missingEvidence",
+    "verdict",
+    "recommendations"
+  ],
+  "properties": {
+    "agent": {
+      "type": "string",
+      "enum": [
+        "product-challenger",
+        "architecture-reviewer",
+        "qa-security-reviewer",
+        "release-evidence-auditor"
+      ]
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observedSha": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "statement",
+          "evidenceLevel"
+        ],
+        "properties": {
+          "statement": {
+            "type": "string"
+          },
+          "evidenceLevel": {
+            "enum": [
+              "VERIFIED",
+              "REPORTED",
+              "PROPOSED",
+              "UNKNOWN"
+            ]
+          },
+          "reference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "missingEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verdict": {
+      "enum": [
+        "PASS",
+        "HOLD",
+        "FAIL"
+      ]
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
