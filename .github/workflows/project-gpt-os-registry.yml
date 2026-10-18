@@ -1,0 +1,104 @@
+name: Project GPT OS Registry
+on:
+  pull_request:
+    paths:
+      - 'registry/**'
+      - 'supabase/functions/project-gpt-os-inventory/**'
+      - 'tests/test_registry_*.py'
+      - '.github/workflows/project-gpt-os-registry.yml'
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Write new records after reviewing dry run'
+        required: true
+        default: false
+        type: boolean
+      confirmation:
+        description: 'For a controlled write, enter APPLY-REGISTRY after reviewing a successful dry run'
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Compile registry Python sources
+        run: python -m compileall -q registry tests
+      - name: Run registry unit tests
+        run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
+      - name: Reject unauthenticated inventory requests (deployed endpoint)
+        env:
+          INVENTORY_URL: https://sbdzvjqwslwaqdqyrbfn.supabase.co/functions/v1/project-gpt-os-inventory
+        run: |
+          python - <<'PY'
+          import os, urllib.request, urllib.error
+          url=os.environ["INVENTORY_URL"]
+          for method, expected in (("GET",401),("POST",405)):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url,method=method),timeout=20) as response:
+                      raise AssertionError(f"{method}: returned successful status {response.status}")
+              except urllib.error.HTTPError as error:
+                  if error.code != expected:
+                      raise AssertionError(f"{method}: expected {expected}, got {error.code}")
+                  print(f"{method}: denied with {error.code}")
+          PY
+  reconcile:
+    if: github.event_name == 'workflow_dispatch'
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: project-gpt-os-registry-write
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Compile registry Python sources
+        run: python -m compileall -q registry tests
+      - name: Run registry unit tests
+        run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
+      - name: Validate integration configuration
+        env:
+          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          missing=0
+          for name in REGISTRY_GITHUB_TOKEN DROPBOX_ACCESS_TOKEN SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY; do
+            if [ -z "${!name}" ]; then
+              echo "::error title=Missing configuration::${name} is not configured"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then exit 1; fi
+      - name: Enforce controlled write confirmation
+        env:
+          APPLY: ${{ inputs.apply || 'false' }}
+          CONFIRMATION: ${{ inputs.confirmation || '' }}
+        run: |
+          if [ "$APPLY" = 'true' ] && [ "$CONFIRMATION" != 'APPLY-REGISTRY' ]; then
+            echo "::error title=Write blocked::Controlled writes require explicit confirmation."
+            exit 1
+          fi
+      - name: Sync inventory
+        env:
+          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          APPLY: ${{ inputs.apply || 'false' }}
+        run: |
+          if [ "$APPLY" = 'true' ]; then python -m registry.sync --apply; else python -m registry.sync; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: registry-sync-report
+          path: reports/registry-sync.json

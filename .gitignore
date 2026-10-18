@@ -1,0 +1,7 @@
+reports/
+registry-private*.json
+*.secret.json
+.env
+.env.*
+__pycache__/
+*.pyc
