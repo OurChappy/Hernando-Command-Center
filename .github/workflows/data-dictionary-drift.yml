@@ -4,7 +4,8 @@ on:
   pull_request:
     paths:
       - 'tools/data_dictionary/**'
-      - 'tests/test_data_dictionary_drift.py'
+      - 'tests/test_data_dictionary_*.py'
+      - 'docs/data-dictionary/**'
       - '.github/workflows/data-dictionary-drift.yml'
 permissions:
   contents: read
@@ -18,7 +19,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Test deterministic drift detection
-        run: python -m unittest discover -s tests -p 'test_data_dictionary_drift.py' -v
+        run: python -m unittest discover -s tests -p 'test_data_dictionary_*.py' -v
       - name: Demonstrate zero drift on synthetic fixture
         run: |
           mkdir -p reports
