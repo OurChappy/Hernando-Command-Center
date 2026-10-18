@@ -12,6 +12,10 @@ on:
         required: true
         default: false
         type: boolean
+      confirmation:
+        description: 'For a controlled write, enter APPLY-REGISTRY after reviewing a successful dry run'
+        required: false
+        type: string
 permissions:
   contents: read
 jobs:
@@ -58,6 +62,15 @@ jobs:
             fi
           done
           if [ "$missing" -ne 0 ]; then exit 1; fi
+      - name: Enforce controlled write confirmation
+        env:
+          APPLY: ${{ inputs.apply || 'false' }}
+          CONFIRMATION: ${{ inputs.confirmation || '' }}
+        run: |
+          if [ "$APPLY" = 'true' ] && [ "$CONFIRMATION" != 'APPLY-REGISTRY' ]; then
+            echo "::error title=Write blocked::Controlled writes require explicit confirmation."
+            exit 1
+          fi
       - name: Sync inventory
         env:
           REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
