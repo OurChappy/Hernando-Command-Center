@@ -12,7 +12,7 @@ class AcceptanceGates(unittest.TestCase):
         self.assertIn("vars.REGISTRY_WRITE_ENABLED || 'false'", self.registry)
         self.assertIn('"$REGISTRY_WRITE_ENABLED" != "true"', self.registry)
     def test_write_requires_confirmation_phrase(self):
-        self.assertIn('"$CONFIRMATION" != "APPLY-REGISTRY"', self.registry)
+        self.assertIn('"$CONFIRMATION" != \'APPLY-REGISTRY\'', self.registry)
     def test_no_automatic_write_workflow(self):
         self.assertNotIn("\n  schedule:", self.registry)
         self.assertNotIn("\n  push:", self.registry)
