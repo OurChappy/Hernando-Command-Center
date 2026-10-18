@@ -48,6 +48,16 @@ class SyncFlowTests(unittest.TestCase):
         self.assertEqual(report["new"], 1)
         self.assertTrue(all(method == "GET" for _, method, _ in calls))
 
+    def test_dry_run_report_redacts_sensitive_discovery(self):
+        calls, report = self.run_scenario(False)
+        self.assertEqual(report["proposed_counts"], {"github": 1, "dropbox": 0})
+        self.assertNotIn("proposed", report)
+        serialized = json.dumps(report)
+        self.assertNotIn("https://github.com/Example/sample", serialized)
+        self.assertNotIn('"external_id"', serialized)
+        self.assertNotIn('"source_path"', serialized)
+        self.assertTrue(all(method == "GET" for _, method, _ in calls))
+
     def test_first_apply_creates_item_and_external_reference(self):
         calls, report = self.run_scenario(True)
         self.assertEqual(report["new"], 1)

@@ -49,7 +49,10 @@ def main(apply=False):
     refs=read("registry_external_refs","provider,external_id")
     discovered=github(os.environ["REGISTRY_GITHUB_TOKEN"],os.getenv("GITHUB_OWNER","OurChappy"))+dropbox(os.environ["DROPBOX_ACCESS_TOKEN"])
     new=reconcile(refs,discovered)
-    report={"dry_run":not apply,"discovered":len(discovered),"existing_refs":len(refs),"new":len(new),"proposed":new}
+    # GitHub Actions artifacts must never contain private paths, names or external IDs.
+    report={"dry_run":not apply,"discovered":len(discovered),"existing_refs":len(refs),"new":len(new),
+            "proposed_counts":{provider:sum(x["provider"]==provider for x in new)
+                               for provider in ("github","dropbox")}}
     os.makedirs("reports",exist_ok=True)
     with open("reports/registry-sync.json","w") as f: json.dump(report,f,indent=2)
     if apply:
@@ -62,7 +65,7 @@ def main(apply=False):
                 item_id=added[0]["id"] if added else (find_one("registry_items","item_code",code) or [])[0]["id"]
                 known[code]=item_id
             insert("registry_external_refs",{"registry_item_id":item_id,"provider":x["provider"],"external_id":x["external_id"],"external_url":x["external_url"],"source_path":x["source_path"]},"provider,external_id")
-    print(json.dumps({k:v for k,v in report.items() if k!="proposed"},indent=2))
+    print(json.dumps(report,indent=2))
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
