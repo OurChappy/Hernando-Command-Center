@@ -1,5 +1,5 @@
 """Idempotent GitHub/Dropbox to Supabase source reconciliation. Stdlib only."""
-import argparse,json,os,urllib.request,urllib.parse
+import argparse,json,os,urllib.request,urllib.parse,urllib.error
 
 def api(url,token,method="GET",body=None,extra=None):
     headers={"Authorization":"Bearer "+token,"Accept":"application/json",**(extra or {})}
@@ -24,7 +24,7 @@ def dropbox(token):
     while r.get("has_more"):
         r=api(endpoint+"list_folder/continue",token,"POST",{"cursor":r["cursor"]})
         out.extend(r["entries"])
-    return [{"provider":"dropbox","external_id":x["id"],"name":x["name"],"external_url":None,"source_path":x["path_display"]} for x in out if x.get(".tag")=="folder"]
+    return [{"provider":"dropbox","external_id":x["id"],"name":x["name"],"external_url":None,"source_path":x.get("path_display") or x.get("path_lower")} for x in out if x.get(".tag")=="folder"]
 
 def reconcile(existing,discovered):
     seen={(x["provider"],str(x["external_id"])) for x in existing}
@@ -39,8 +39,12 @@ def main(apply=False):
     key=os.environ["SUPABASE_SERVICE_ROLE_KEY"]
     def read(table,select):
         return api(base+table+"?select="+urllib.parse.quote(select)+"&limit=10000",key,extra={"apikey":key})
-    def insert(table,record):
-        return api(base+table,key,"POST",record,{"apikey":key,"Prefer":"return=representation"})
+    def insert(table,record,conflict):
+        url=base+table+"?on_conflict="+urllib.parse.quote(conflict)
+        return api(url,key,"POST",record,{"apikey":key,"Prefer":"resolution=ignore-duplicates,return=representation"})
+    def find_one(table,field,value):
+        url=base+table+"?"+urllib.parse.quote(field)+"=eq."+urllib.parse.quote(str(value))+"&select=id&limit=1"
+        return api(url,key,extra={"apikey":key})
     items=read("registry_items","id,item_code")
     refs=read("registry_external_refs","provider,external_id")
     discovered=github(os.environ["REGISTRY_GITHUB_TOKEN"],os.getenv("GITHUB_OWNER","OurChappy"))+dropbox(os.environ["DROPBOX_ACCESS_TOKEN"])
@@ -54,9 +58,10 @@ def main(apply=False):
             code=x["provider"]+":"+x["external_id"]
             item_id=known.get(code)
             if item_id is None:
-                item_id=insert("registry_items",{"item_type":"source","item_code":code,"name":x["name"],"status":"Active"})[0]["id"]
+                added=insert("registry_items",{"item_type":"source","item_code":code,"name":x["name"],"status":"Active"},"item_type,item_code")
+                item_id=added[0]["id"] if added else (find_one("registry_items","item_code",code) or [])[0]["id"]
                 known[code]=item_id
-            insert("registry_external_refs",{"registry_item_id":item_id,"provider":x["provider"],"external_id":x["external_id"],"external_url":x["external_url"],"source_path":x["source_path"]})
+            insert("registry_external_refs",{"registry_item_id":item_id,"provider":x["provider"],"external_id":x["external_id"],"external_url":x["external_url"],"source_path":x["source_path"]},"provider,external_id")
     print(json.dumps({k:v for k,v in report.items() if k!="proposed"},indent=2))
 
 if __name__=="__main__":
