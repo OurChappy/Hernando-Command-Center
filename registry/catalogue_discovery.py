@@ -5,7 +5,7 @@ from pathlib import Path
 def discover_candidates(repository_records):
     profiles = {
         "1351223629": ("plugin", "TAFE Browser MCP", "source_verified", "README documents local stdio MCP and remote deployment is deferred"),
-        "1245312722": ("plugin", "PortalFlow Connector Hub", "source_verified", "README advertises FastAPI gateway and deployment; endpoint health not verified"),
+        "1245312722": ("plugin", "PortalFlow Connector Hub", "source_verified", "FastAPI gateway source found; hosting undecided and no deployment verified"),
         "1340726659": ("application", "Project GPT OS Web App", "source_verified", "README says Next.js app deployed on Vercel; deployment not independently verified"),
     }
     candidates=[]
