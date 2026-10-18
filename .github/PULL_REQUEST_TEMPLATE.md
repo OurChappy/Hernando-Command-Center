@@ -14,7 +14,7 @@ Observed base and head SHAs:
 | Positive path | | UNKNOWN | |
 | Negative path | | UNKNOWN | |
 | Regression | | UNKNOWN | |
-| Hosted CI | | UNKNOWN | |
+| Hosted CI (CI URLs and conclusion) | | UNKNOWN | |
 
 ## Risk and approvals
 - [ ] No merge or deployment performed
