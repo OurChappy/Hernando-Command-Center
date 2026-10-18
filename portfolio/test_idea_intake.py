@@ -33,6 +33,12 @@ class Tests(unittest.TestCase):
     def test_empty_evidence(self):
         i=copy.deepcopy(I); i["evidence"]=[{"classification":"verified"}]
         with self.assertRaisesRegex(ValueError,"Evidence"): propose(i,INV)
+    def test_string_dependency_rejected(self):
+        i=copy.deepcopy(I); i["tasks"][1]["depends_on"]="T1"
+        with self.assertRaisesRegex(ValueError,"dependencies"): propose(i,INV)
+    def test_nonstring_acceptance_rejected(self):
+        i=copy.deepcopy(I); i["tasks"][0]["acceptance"]=[12]
+        with self.assertRaisesRegex(ValueError,"acceptance"): propose(i,INV)
     def test_missing_acceptance(self):
         i=copy.deepcopy(I); i["tasks"][0]["acceptance"]=[]
         with self.assertRaisesRegex(ValueError,"acceptance"): propose(i,INV)
