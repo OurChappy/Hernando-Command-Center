@@ -81,13 +81,16 @@ def render(report):
     return "\n".join(rows) + "\n"
 
 def main():
-    token = os.environ.get("GH_PORTFOLIO_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    token = os.environ.get("GH_PORTFOLIO_TOKEN")
     owner = os.environ.get("AUDIT_OWNER", "OurChappy")
     if not token:
-        raise SystemExit("GH_PORTFOLIO_TOKEN or GITHUB_TOKEN required")
+        raise SystemExit("GH_PORTFOLIO_TOKEN read-only cross-repository secret required")
     repos = pages("/user/repos?affiliation=owner,organization_member&visibility=all", token)
     # Organization names also supported where accessible via org endpoint.
     repos = [r for r in repos if r.get("owner", {}).get("login", "").lower() == owner.lower()]
+    expected = int(os.environ.get("EXPECTED_REPO_COUNT", "15"))
+    if len(repos) < expected:
+        raise SystemExit(f"Only {len(repos)} repositories visible, expected at least {expected}; refusing incomplete report")
     if not repos:
         raise SystemExit("No repositories visible to token; check permissions and owner")
     result = {"owner": owner, "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
