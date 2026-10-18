@@ -13,6 +13,10 @@ on:
         required: true
         default: false
         type: boolean
+      approved_new_count:
+        description: 'Expected number of newly discovered sources; required for controlled writes'
+        required: false
+        type: string
       confirmation:
         description: 'For a controlled write, enter APPLY-REGISTRY after reviewing a successful dry run'
         required: false
@@ -104,6 +108,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           APPLY: ${{ inputs.apply || 'false' }}
+          REGISTRY_APPROVED_NEW_COUNT: ${{ inputs.approved_new_count || '' }}
         run: |
           if [ "$APPLY" = 'true' ]; then python -m registry.sync --apply; else python -m registry.sync; fi
       - uses: actions/upload-artifact@v4
