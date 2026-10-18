@@ -1,0 +1,103 @@
+{
+  "tasks": [
+    {
+      "id": "SYN-01",
+      "lane": "repair",
+      "repository_id": "1",
+      "project_id": "synthetic-project",
+      "head_sha": "synthetic-head",
+      "required_checks": [
+        "unit"
+      ],
+      "ci": {
+        "sha": "synthetic-head",
+        "checks": {
+          "unit": "success"
+        }
+      }
+    },
+    {
+      "id": "SYN-02",
+      "lane": "build",
+      "repository_id": "2",
+      "project_id": "synthetic-project",
+      "head_sha": "synthetic-head",
+      "required_checks": [
+        "unit"
+      ],
+      "ci": {
+        "sha": "synthetic-head",
+        "checks": {
+          "unit": "success"
+        }
+      }
+    },
+    {
+      "id": "SYN-03",
+      "lane": "verify",
+      "repository_id": "3",
+      "project_id": "synthetic-project",
+      "head_sha": "synthetic-head",
+      "required_checks": [
+        "unit"
+      ],
+      "ci": {
+        "sha": "synthetic-head",
+        "checks": {
+          "unit": "success"
+        }
+      }
+    },
+    {
+      "id": "SYN-04",
+      "lane": "build",
+      "repository_id": "4",
+      "project_id": "synthetic-project",
+      "head_sha": "synthetic-head",
+      "required_checks": [
+        "unit"
+      ],
+      "ci": {
+        "sha": "synthetic-head",
+        "checks": {
+          "unit": "success"
+        }
+      },
+      "depends_on": [
+        "SYN-01"
+      ]
+    },
+    {
+      "id": "SYN-05",
+      "lane": "verify",
+      "repository_id": "1",
+      "project_id": "synthetic-project",
+      "head_sha": "synthetic-head",
+      "required_checks": [
+        "unit"
+      ],
+      "ci": {
+        "sha": "synthetic-head",
+        "checks": {
+          "unit": "success"
+        }
+      }
+    },
+    {
+      "id": "SYN-06",
+      "lane": "build",
+      "repository_id": "99",
+      "project_id": "synthetic-project",
+      "head_sha": "synthetic-head",
+      "required_checks": [
+        "unit"
+      ],
+      "ci": {
+        "sha": "synthetic-head",
+        "checks": {
+          "unit": "success"
+        }
+      }
+    }
+  ]
+}
