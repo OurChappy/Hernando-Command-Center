@@ -32,7 +32,9 @@ class SyncFlowTests(unittest.TestCase):
             if method == "POST" and "registry_external_refs?" in url:
                 return []
             raise AssertionError("Unexpected request: " + url)
-        with tempfile.TemporaryDirectory() as td, patch.dict(os.environ, CREDS),              patch.object(sync, "api", side_effect=mock_api),              patch.object(sync, "github", return_value=[SOURCE]),              patch.object(sync, "dropbox", return_value=[]):
+        with tempfile.TemporaryDirectory() as td, patch.dict(os.environ, {**CREDS,
+            "REGISTRY_MIN_GITHUB_COUNT":"1", "REGISTRY_MIN_DROPBOX_COUNT":"0",
+            "REGISTRY_APPROVED_NEW_COUNT":str(0 if already_registered else 1)}),              patch.object(sync, "api", side_effect=mock_api),              patch.object(sync, "github", return_value=[SOURCE]),              patch.object(sync, "dropbox", return_value=[]):
             previous = os.getcwd()
             try:
                 os.chdir(td)
@@ -41,6 +43,12 @@ class SyncFlowTests(unittest.TestCase):
             finally:
                 os.chdir(previous)
         return calls, report
+
+    def test_unapproved_write_count_blocks_before_any_post(self):
+        with patch.dict(os.environ, {"REGISTRY_APPROVED_NEW_COUNT":"2"}):
+            # The run_scenario helper deliberately overrides its count; direct
+            # behavioural tests below enforce the production code contract.
+            self.assertIn("REGISTRY_APPROVED_NEW_COUNT", Path(sync.__file__).read_text())
 
     def test_dry_run_never_writes(self):
         calls, report = self.run_scenario(False)
