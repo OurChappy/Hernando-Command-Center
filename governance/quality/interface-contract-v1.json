@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "integration_status": "proposed",
+  "source_prs": [
+    2,
+    14,
+    15
+  ],
+  "boundaries": {
+    "intake": {
+      "version": 1,
+      "mode": "dry_run",
+      "owner": "portfolio/idea_intake.py"
+    },
+    "dispatcher": {
+      "version": 1,
+      "mode": "plan_only",
+      "owner": "portfolio/dispatcher.py"
+    },
+    "worksheet": {
+      "version": "1.0.0",
+      "mode": "offline_dry_run",
+      "owner": "portfolio/v4/exporter.py"
+    }
+  },
+  "prohibitions": [
+    "external writes",
+    "schema version coercion",
+    "missing observed-at provenance",
+    "admission without exact head SHA"
+  ]
+}

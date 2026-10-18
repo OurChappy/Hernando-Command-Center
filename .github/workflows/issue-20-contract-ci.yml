@@ -1,0 +1,22 @@
+name: Issue 20 Offline Interface Contract
+on:
+  pull_request:
+    paths:
+      - 'tests/test_interface_compatibility.py'
+      - 'governance/quality/interface-contract-v1.json'
+      - '.github/workflows/issue-20-contract-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_interface_compatibility.py' -v
