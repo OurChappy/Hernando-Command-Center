@@ -16,3 +16,10 @@ Open `registry/dashboard.html` locally and load a JSON source export. It works o
 
 ## Limitations
 GitHub source listing is scoped to `OurChappy`; Dropbox listing to `/Workspace`. Live workflow execution requires secrets and was not tested as part of the local unit tests.
+
+## Validation record — 2026-10-18
+Connector-level credential-free comparison: 15 GitHub repositories + 35 Dropbox folders = 50 registered external references; duplicate external IDs: 0.
+Controlled database conflict write: attempted reinsert of known GitHub source `1415950693` using `ON CONFLICT DO NOTHING`; inserted 0, original retained as 1, total remained 50.
+Scheduled trigger removed pending live GitHub Actions credential-safe dry run. PR test jobs do not receive credentials.
+Remaining gates: confirm GitHub Actions secrets, run manual `apply=false` to completion and inspect report; stage and verify one authoritative new source with `apply=true`; re-run and verify zero further inserts. Do not schedule writes before these pass.
+These connector-side checks do NOT establish that the GitHub-hosted workflow authenticated successfully.
