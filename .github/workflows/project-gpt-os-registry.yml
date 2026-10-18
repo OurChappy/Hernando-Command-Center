@@ -18,11 +18,14 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
+      - name: Compile registry Python sources
+        run: python -m compileall -q registry tests
+      - name: Run registry unit tests
+        run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
   reconcile:
     if: github.event_name == 'workflow_dispatch'
     needs: unit-tests
@@ -32,11 +35,14 @@ jobs:
       group: project-gpt-os-registry-write
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
+      - name: Compile registry Python sources
+        run: python -m compileall -q registry tests
+      - name: Run registry unit tests
+        run: python -m unittest discover -s tests -p 'test_registry_*.py' -v
       - name: Validate integration configuration
         env:
           REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
