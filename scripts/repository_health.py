@@ -85,7 +85,7 @@ def main():
     owner = os.environ.get("AUDIT_OWNER", "OurChappy")
     if not token:
         raise SystemExit("GH_PORTFOLIO_TOKEN or GITHUB_TOKEN required")
-    repos = pages(f"/users/{urllib.parse.quote(owner)}/repos?type=all", token)
+    repos = pages("/user/repos?affiliation=owner,organization_member&visibility=all", token)
     # Organization names also supported where accessible via org endpoint.
     repos = [r for r in repos if r.get("owner", {}).get("login", "").lower() == owner.lower()]
     if not repos:
