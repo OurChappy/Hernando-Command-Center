@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OurChappy artefact envelope",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "cycle_id",
+    "artefact_type",
+    "status",
+    "source_refs",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "cycle_id": {
+      "type": "string"
+    },
+    "artefact_type": {
+      "enum": [
+        "idea",
+        "research",
+        "issue_proposal",
+        "dependency_plan",
+        "handoff",
+        "pr_evidence",
+        "release_candidate",
+        "showcase"
+      ]
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "draft",
+        "verified",
+        "blocked",
+        "approved"
+      ]
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "url",
+          "observation"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "observation": {
+            "enum": [
+              "verified",
+              "reported",
+              "proposed",
+              "unknown"
+            ]
+          }
+        }
+      }
+    },
+    "payload": {
+      "type": "object"
+    }
+  }
+}
