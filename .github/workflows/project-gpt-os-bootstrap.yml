@@ -43,5 +43,12 @@ jobs:
           keys=[(x.get("provider"),x.get("external_id")) for x in sources]
           if len(keys)!=50 or len(set(keys))!=len(keys):
               raise RuntimeError("Inventory differs from approved 50-source baseline; review before release")
-          print("OIDC verified read-only inventory: 50 unique sources.")
+          from collections import Counter
+          providers=Counter(x.get("provider") for x in sources)
+          if providers != {"github":15,"dropbox":35}:
+              raise RuntimeError("Provider breakdown differs from approved baseline; review before release")
+          if any(not x.get("external_id") or not x.get("name") for x in sources):
+              raise RuntimeError("Missing mandatory source identity")
+          print("OIDC accepted. Read-only inventory validated: 15 GitHub + 35 Dropbox, 50 unique sources.")
+
           PY
