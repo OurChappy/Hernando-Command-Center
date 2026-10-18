@@ -1,0 +1,37 @@
+name: Project GPT OS Registry
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Write new records after reviewing dry run'
+        required: true
+        default: false
+        type: boolean
+  schedule:
+    - cron: '17 2 * * 1'
+permissions:
+  contents: read
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_registry_sync.py' -v
+      - name: Sync inventory
+        env:
+          REGISTRY_GITHUB_TOKEN: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          APPLY: ${{ inputs.apply || 'false' }}
+        run: |
+          if [ "$APPLY" = 'true' ]; then python -m registry.sync --apply; else python -m registry.sync; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: registry-sync-report
+          path: reports/registry-sync.json
