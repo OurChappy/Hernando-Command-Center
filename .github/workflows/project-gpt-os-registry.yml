@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'registry/**'
+      - 'supabase/functions/project-gpt-os-inventory/**'
       - 'tests/test_registry_*.py'
       - '.github/workflows/project-gpt-os-registry.yml'
   workflow_dispatch:
