@@ -1,0 +1,67 @@
+name: Portfolio dispatcher synthetic checks
+on:
+  pull_request:
+    paths:
+      - 'portfolio/**'
+      - 'tests/test_portfolio_dispatcher.py'
+      - '.github/workflows/portfolio-dispatcher.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-synthetic-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, verified from existing CI
+        with:
+          persist-credentials: false
+      - name: Compile and test all dispatcher acceptance cases
+        run: |
+          python3 -m compileall -q portfolio tests/test_portfolio_dispatcher.py
+          python3 -m unittest discover -s tests -p 'test_portfolio_dispatcher.py' -v
+      - name: Plan synthetic tasks
+        run: python3 -m portfolio.dispatcher --registry portfolio/synthetic-registry.json --tasks portfolio/synthetic-tasks.json --output /tmp/portfolio-plan.json
+      - name: Summarise synthetic counts only
+        run: |
+          python3 - <<'PY'
+          import json, os
+          report = json.load(open('/tmp/portfolio-plan.json'))
+          assert report['counts'] == {'selected': 3, 'held': 3, 'completed': 0}, report['counts']
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              out.write('Synthetic plan passed: 3 selected, 3 held; zero external writes.\n')
+          PY
+  simulate-lanes:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        lane: [repair, build, verify]
+    concurrency:
+      group: portfolio-synthetic-lane-${{ matrix.lane }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Simulate fixed lane admission without executing task content
+        env:
+          LANE: ${{ matrix.lane }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          from portfolio.dispatcher import plan
+          registry = json.loads(Path('portfolio/synthetic-registry.json').read_text())
+          tasks = json.loads(Path('portfolio/synthetic-tasks.json').read_text())['tasks']
+          selected = [r for r in plan(registry, tasks)['selected'] if r['lane'] == os.environ['LANE']]
+          assert len(selected) == 1
+          print('Synthetic lane admission passed; no task executed.')
+          PY
+# No live input, secrets, schedule, artifact upload, execution or deployment.

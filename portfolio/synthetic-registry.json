@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-01-01T00:00:00Z",
+  "projects": [
+    {
+      "id": "synthetic-project",
+      "project_code": "SYNTHETIC"
+    }
+  ],
+  "registry_items": [
+    {
+      "id": "synthetic-item-1",
+      "project_id": "synthetic-project",
+      "status": "verified"
+    },
+    {
+      "id": "synthetic-item-2",
+      "project_id": "synthetic-project",
+      "status": "verified"
+    },
+    {
+      "id": "synthetic-item-3",
+      "project_id": "synthetic-project",
+      "status": "verified"
+    },
+    {
+      "id": "synthetic-item-4",
+      "project_id": "synthetic-project",
+      "status": "verified"
+    }
+  ],
+  "registry_external_refs": [
+    {
+      "registry_item_id": "synthetic-item-1",
+      "provider": "github",
+      "external_id": "1"
+    },
+    {
+      "registry_item_id": "synthetic-item-2",
+      "provider": "github",
+      "external_id": "2"
+    },
+    {
+      "registry_item_id": "synthetic-item-3",
+      "provider": "github",
+      "external_id": "3"
+    },
+    {
+      "registry_item_id": "synthetic-item-4",
+      "provider": "github",
+      "external_id": "4"
+    }
+  ],
+  "registry_dependencies": []
+}
