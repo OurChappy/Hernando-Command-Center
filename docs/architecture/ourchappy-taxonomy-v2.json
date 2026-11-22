@@ -1,0 +1,444 @@
+{
+  "version": "2.0",
+  "created": "2026-11-23",
+  "status": "draft_not_applied",
+  "owner": "OurChappy",
+  "model": {
+    "repository_topics": "Family, domain, bounded role and portfolio lifecycle; avoid recording live health",
+    "work_item_labels": "Type, area, priority, change risk, workflow state and consolidation stage",
+    "source_of_truth": "GitHub native PR state remains authoritative; labels aid triage only",
+    "privacy": "Private repo details must not be copied into public catalogue or topics"
+  },
+  "topic_dimensions": {
+    "domain": [
+      "operations",
+      "platform",
+      "engineering",
+      "product",
+      "education",
+      "portfolio",
+      "research",
+      "web",
+      "reference",
+      "learning"
+    ],
+    "product": [
+      "rosie",
+      "portalflow",
+      "pagesmith",
+      "goodturn",
+      "pechakucha"
+    ],
+    "role": [
+      "control-plane",
+      "execution",
+      "integration",
+      "workspace",
+      "application",
+      "brand",
+      "showcase",
+      "case-study",
+      "website",
+      "upstream-reference",
+      "training"
+    ],
+    "lifecycle": [
+      "active",
+      "review",
+      "reference"
+    ]
+  },
+  "repository_topics": [
+    {
+      "repository": "OurChappy/Hernando-Command-Center",
+      "topics": [
+        "domain-operations",
+        "product-rosie",
+        "role-control-plane",
+        "lifecycle-review"
+      ],
+      "requires_ownership_review": true
+    },
+    {
+      "repository": "OurChappy/Script-Station",
+      "topics": [
+        "domain-operations",
+        "product-rosie",
+        "role-execution",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/portalflow-ai",
+      "topics": [
+        "domain-platform",
+        "product-portalflow",
+        "role-integration",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/Chatgpt",
+      "topics": [
+        "domain-engineering",
+        "role-workspace",
+        "lifecycle-review"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/pagesmith-agent",
+      "topics": [
+        "domain-product",
+        "product-pagesmith",
+        "role-application",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/EducationDataProduct-au",
+      "topics": [
+        "domain-education",
+        "role-application",
+        "lifecycle-review"
+      ],
+      "requires_ownership_review": true
+    },
+    {
+      "repository": "OurChappy/goodturn-brand",
+      "topics": [
+        "domain-education",
+        "product-goodturn",
+        "role-brand",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/goodturn-moodle",
+      "topics": [
+        "domain-education",
+        "product-goodturn",
+        "role-application",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/tafe-browser-mcp",
+      "topics": [
+        "domain-education",
+        "role-integration",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/pechakucha-studio-private",
+      "topics": [
+        "domain-product",
+        "product-pechakucha",
+        "role-application",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/Portfolio",
+      "topics": [
+        "domain-portfolio",
+        "role-showcase",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/Advanced-Power-BI-Projects",
+      "topics": [
+        "domain-portfolio",
+        "role-showcase",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/acnc-nonprofit-analytics-study-case",
+      "topics": [
+        "domain-research",
+        "role-case-study",
+        "lifecycle-active"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/LittleGrumble.github.io",
+      "topics": [
+        "domain-web",
+        "role-website",
+        "lifecycle-review"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/agentskills",
+      "topics": [
+        "domain-reference",
+        "role-upstream-reference",
+        "lifecycle-reference"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/ui",
+      "topics": [
+        "domain-reference",
+        "role-upstream-reference",
+        "lifecycle-reference"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/stripe-python",
+      "topics": [
+        "domain-reference",
+        "role-upstream-reference",
+        "lifecycle-reference"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/skills-idea-to-merge-with-the-copilot-app",
+      "topics": [
+        "domain-learning",
+        "role-training",
+        "lifecycle-review"
+      ],
+      "requires_ownership_review": false
+    },
+    {
+      "repository": "OurChappy/skills-copilot-codespaces-vscode",
+      "topics": [
+        "domain-learning",
+        "role-training",
+        "lifecycle-review"
+      ],
+      "requires_ownership_review": false
+    }
+  ],
+  "issue_pr_labels": [
+    {
+      "name": "type:bug",
+      "group": "type",
+      "color": "d73a4a",
+      "description": "Existing functionality is broken"
+    },
+    {
+      "name": "type:feature",
+      "group": "type",
+      "color": "a2eeef",
+      "description": "New user or product capability"
+    },
+    {
+      "name": "type:enhancement",
+      "group": "type",
+      "color": "84b6eb",
+      "description": "Improve existing behaviour"
+    },
+    {
+      "name": "type:refactor",
+      "group": "type",
+      "color": "c5def5",
+      "description": "Restructure without intended behaviour change"
+    },
+    {
+      "name": "type:docs",
+      "group": "type",
+      "color": "0075ca",
+      "description": "Documentation and editorial changes"
+    },
+    {
+      "name": "type:test",
+      "group": "type",
+      "color": "b4a7d6",
+      "description": "Tests, fixtures and verification"
+    },
+    {
+      "name": "type:chore",
+      "group": "type",
+      "color": "ededed",
+      "description": "Maintenance with no product change"
+    },
+    {
+      "name": "type:security",
+      "group": "type",
+      "color": "b60205",
+      "description": "Security or privacy issue"
+    },
+    {
+      "name": "area:registry",
+      "group": "area",
+      "color": "1d76db",
+      "description": "Registry, identities and canonical records"
+    },
+    {
+      "name": "area:automation",
+      "group": "area",
+      "color": "1d76db",
+      "description": "Mac, jobs, workflows or Housekeeping"
+    },
+    {
+      "name": "area:integration",
+      "group": "area",
+      "color": "1d76db",
+      "description": "External API, connector or MCP"
+    },
+    {
+      "name": "area:app",
+      "group": "area",
+      "color": "1d76db",
+      "description": "User-facing app and interface"
+    },
+    {
+      "name": "area:data",
+      "group": "area",
+      "color": "1d76db",
+      "description": "Data models, pipelines or migrations"
+    },
+    {
+      "name": "area:ci",
+      "group": "area",
+      "color": "1d76db",
+      "description": "Continuous integration and release"
+    },
+    {
+      "name": "area:docs",
+      "group": "area",
+      "color": "1d76db",
+      "description": "Documentation system or publishing"
+    },
+    {
+      "name": "priority:p0",
+      "group": "priority",
+      "color": "b60205",
+      "description": "Critical, immediate mitigation required"
+    },
+    {
+      "name": "priority:p1",
+      "group": "priority",
+      "color": "d93f0b",
+      "description": "High priority within active sprint"
+    },
+    {
+      "name": "priority:p2",
+      "group": "priority",
+      "color": "fbca04",
+      "description": "Normal planned work"
+    },
+    {
+      "name": "priority:p3",
+      "group": "priority",
+      "color": "c2e0c6",
+      "description": "Backlog or optional improvement"
+    },
+    {
+      "name": "risk:low",
+      "group": "risk",
+      "color": "0e8a16",
+      "description": "Isolated, reversible, verified low-risk change"
+    },
+    {
+      "name": "risk:medium",
+      "group": "risk",
+      "color": "fbca04",
+      "description": "Cross-component review required"
+    },
+    {
+      "name": "risk:high",
+      "group": "risk",
+      "color": "d93f0b",
+      "description": "Security, data, authentication or significant integration risk"
+    },
+    {
+      "name": "risk:production",
+      "group": "risk",
+      "color": "b60205",
+      "description": "Potential live runtime or persistent-state impact"
+    },
+    {
+      "name": "state:needs-evidence",
+      "group": "state",
+      "color": "fef2c0",
+      "description": "Insufficient evidence to accept"
+    },
+    {
+      "name": "state:blocked",
+      "group": "state",
+      "color": "b60205",
+      "description": "Known unresolved dependency"
+    },
+    {
+      "name": "state:ready-for-review",
+      "group": "state",
+      "color": "0e8a16",
+      "description": "Acceptance evidence ready for reviewer"
+    },
+    {
+      "name": "state:approved",
+      "group": "state",
+      "color": "0e8a16",
+      "description": "Explicit approval recorded; not equivalent to merged"
+    },
+    {
+      "name": "migration:assess",
+      "group": "migration",
+      "color": "bfd4f2",
+      "description": "Inventory and feasibility assessment"
+    },
+    {
+      "name": "migration:consumer-check",
+      "group": "migration",
+      "color": "bfd4f2",
+      "description": "Verify live callers and dependencies"
+    },
+    {
+      "name": "migration:parity",
+      "group": "migration",
+      "color": "bfd4f2",
+      "description": "Confirm source/target functional parity"
+    },
+    {
+      "name": "migration:cutover-proposed",
+      "group": "migration",
+      "color": "f9d0c4",
+      "description": "Controlled cutover proposed; not approved"
+    },
+    {
+      "name": "migration:rollback-ready",
+      "group": "migration",
+      "color": "c2e0c6",
+      "description": "Rollback pathway tested and documented"
+    }
+  ],
+  "compatibility": {
+    "existing_labels": "Preserve current repo-specific labels including Chatgpt area/apps and area/packages",
+    "migration_from_v1": {
+      "status:needs-evidence": "state:needs-evidence",
+      "status:blocked": "state:blocked",
+      "status:ready-for-review": "state:ready-for-review",
+      "migration:assessment": "migration:assess",
+      "migration:cutover-proposal": "migration:cutover-proposed"
+    },
+    "do_not_auto_relabel": true
+  },
+  "constraints": {
+    "work_type": "Exactly one type per PR",
+    "work_area": "One or more as relevant",
+    "priority": "At most one",
+    "risk": "Exactly one for migration/cutover; risk:production is a specific impact flag, not severity order",
+    "state": "At most one; native GitHub PR status remains authoritative",
+    "migration": "One current stage or multiple verified gates only where meaningful"
+  }
+}
