@@ -1,0 +1,218 @@
+{
+  "schema_version": "1.0",
+  "audited_date": "2026-11-23",
+  "status": "PROPOSED_NOT_APPLIED",
+  "owner": "OurChappy",
+  "source": "GitHub source-tree audit plus selected files, not operational health validation",
+  "repositories": [
+    {
+      "repository": "OurChappy/Script-Station",
+      "domain": "operations",
+      "proposed_target": "Script-Station",
+      "decision": "retain",
+      "role": "Canonical Mac scripts, Housekeeping, local script registry, Project GPT OS app candidate",
+      "visibility_at_audit": "private",
+      "priority": "P0",
+      "cutover_gate": "live launchd, Vercel, tests, PR inventory",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/Hernando-Command-Center",
+      "domain": "operations",
+      "proposed_target": "Hernando-Command-Center",
+      "decision": "retain",
+      "role": "Canonical central Supabase registry and portfolio governance; Rosie hub candidate",
+      "visibility_at_audit": "public",
+      "priority": "P0",
+      "cutover_gate": "registry schema, auth, deployed consumers, open PRs",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/portalflow-ai",
+      "domain": "platform",
+      "proposed_target": "portalflow-ai",
+      "decision": "retain",
+      "role": "Connector hub and upload portal; separate deployed product",
+      "visibility_at_audit": "public",
+      "priority": "P1",
+      "cutover_gate": "Railway and upload portal auth/runtime",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/Chatgpt",
+      "domain": "development",
+      "proposed_target": "Chatgpt",
+      "decision": "decompose_candidate",
+      "role": "AI developer workspace plus Phoenix Investor and legacy Project GPT OS",
+      "visibility_at_audit": "public",
+      "priority": "P1",
+      "cutover_gate": "all applications, deployment triggers, PRs, feature parity",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/pagesmith-agent",
+      "domain": "products",
+      "proposed_target": "pagesmith-agent",
+      "decision": "retain",
+      "role": "Document and Apple Pages engine",
+      "visibility_at_audit": "private",
+      "priority": "P1",
+      "cutover_gate": "Mac/Pages acceptance, workflow release triggers",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/EducationDataProduct-au",
+      "domain": "products",
+      "proposed_target": "EducationDataProduct-au",
+      "decision": "retain",
+      "role": "Education intelligence web product; embedded old TAFE MCP candidate",
+      "visibility_at_audit": "private",
+      "priority": "P1",
+      "cutover_gate": "embedded MCP consumers, Supabase, Vercel",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/tafe-browser-mcp",
+      "domain": "products",
+      "proposed_target": "tafe-browser-mcp",
+      "decision": "retain",
+      "role": "Canonical TAFE MCP candidate (server v0.2.1)",
+      "visibility_at_audit": "private",
+      "priority": "P1",
+      "cutover_gate": "Railway, SSO state, contract parity",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/goodturn-brand",
+      "domain": "products",
+      "proposed_target": "goodturn-brand",
+      "decision": "retain",
+      "role": "Goodturn brand, strategy and reusable intellectual property",
+      "visibility_at_audit": "private",
+      "priority": "P2",
+      "cutover_gate": "PR reconciliation, intellectual property boundaries",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/goodturn-moodle",
+      "domain": "products",
+      "proposed_target": "goodturn-moodle",
+      "decision": "retain",
+      "role": "Moodle learning platform, feature branches",
+      "visibility_at_audit": "private",
+      "priority": "P2",
+      "cutover_gate": "draft PRs and installer acceptance",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/pechakucha-studio-private",
+      "domain": "products",
+      "proposed_target": "pechakucha-studio-private",
+      "decision": "retain",
+      "role": "Presentation product, Vercel and local runtime",
+      "visibility_at_audit": "private",
+      "priority": "P2",
+      "cutover_gate": "PRs, auth/cloud sync and release",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/Portfolio",
+      "domain": "portfolio",
+      "proposed_target": "Portfolio",
+      "decision": "retain",
+      "role": "Portfolio index and curated public case study links",
+      "visibility_at_audit": "public",
+      "priority": "P2",
+      "cutover_gate": "publication and attribution review",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/Advanced-Power-BI-Projects",
+      "domain": "portfolio",
+      "proposed_target": "Advanced-Power-BI-Projects",
+      "decision": "retain",
+      "role": "Large binary Power BI showcase source",
+      "visibility_at_audit": "public",
+      "priority": "P2",
+      "cutover_gate": "dataset licensing and PII audit",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/acnc-nonprofit-analytics-study-case",
+      "domain": "portfolio",
+      "proposed_target": "acnc-nonprofit-analytics-study-case",
+      "decision": "retain",
+      "role": "Distinct ACNC analytics case study and enrichment MCP",
+      "visibility_at_audit": "public",
+      "priority": "P2",
+      "cutover_gate": "branch reconciliation and data provenance",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/LittleGrumble.github.io",
+      "domain": "web",
+      "proposed_target": "LittleGrumble.github.io",
+      "decision": "review_archive",
+      "role": "CNAME plus README; potential site reference",
+      "visibility_at_audit": "public",
+      "priority": "P3",
+      "cutover_gate": "DNS and Pages consumers",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/agentskills",
+      "domain": "external",
+      "proposed_target": "agentskills",
+      "decision": "reference",
+      "role": "Third-party Agent Skills SDK/spec reference",
+      "visibility_at_audit": "public",
+      "priority": "P3",
+      "cutover_gate": "upstream provenance, licences",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/ui",
+      "domain": "external",
+      "proposed_target": "ui",
+      "decision": "reference",
+      "role": "Third-party shadcn/ui reference",
+      "visibility_at_audit": "public",
+      "priority": "P3",
+      "cutover_gate": "upstream provenance, licences",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/stripe-python",
+      "domain": "external",
+      "proposed_target": "stripe-python",
+      "decision": "reference",
+      "role": "Third-party Stripe SDK reference",
+      "visibility_at_audit": "public",
+      "priority": "P3",
+      "cutover_gate": "upstream provenance, licences",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/skills-idea-to-merge-with-the-copilot-app",
+      "domain": "learning",
+      "proposed_target": "skills-idea-to-merge-with-the-copilot-app",
+      "decision": "review_archive",
+      "role": "GitHub Skills training exercise",
+      "visibility_at_audit": "public",
+      "priority": "P3",
+      "cutover_gate": "user retains course progress and references",
+      "code_migration_authorized": false
+    },
+    {
+      "repository": "OurChappy/skills-copilot-codespaces-vscode",
+      "domain": "learning",
+      "proposed_target": "skills-copilot-codespaces-vscode",
+      "decision": "review_archive",
+      "role": "Empty repository, no branches at audit",
+      "visibility_at_audit": "public",
+      "priority": "P3",
+      "cutover_gate": "linked issues or tutorials",
+      "code_migration_authorized": false
+    }
+  ]
+}
