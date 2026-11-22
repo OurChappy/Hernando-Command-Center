@@ -1,0 +1,324 @@
+{
+  "schema_version": "1.0",
+  "scope": "OurChappy",
+  "status": "PROPOSED_NOT_APPLIED",
+  "as_of": "2026-11-23",
+  "topic_rules": {
+    "format": "lowercase-kebab-case",
+    "use": "GitHub repository topics; no lifecycle state is inferred from commit activity",
+    "max_topics_per_repo": 20,
+    "do_not_apply_automatically": true
+  },
+  "repositories": [
+    {
+      "name": "OurChappy/Hernando-Command-Center",
+      "proposed_topics": [
+        "domain-operations",
+        "product-rosie",
+        "role-control-plane",
+        "lifecycle-active"
+      ],
+      "description": "Central registry governance; proposed Rosie control plane",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/Script-Station",
+      "proposed_topics": [
+        "domain-operations",
+        "product-rosie",
+        "role-execution",
+        "lifecycle-active"
+      ],
+      "description": "Mac automation and Housekeeping",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/portalflow-ai",
+      "proposed_topics": [
+        "domain-platform",
+        "product-portalflow",
+        "role-integration",
+        "lifecycle-active"
+      ],
+      "description": "External connectors and upload portal",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/Chatgpt",
+      "proposed_topics": [
+        "domain-engineering",
+        "role-workspace",
+        "lifecycle-review"
+      ],
+      "description": "Mixed AI development workspace; decomposition candidate",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/pagesmith-agent",
+      "proposed_topics": [
+        "domain-product",
+        "product-pagesmith",
+        "role-application",
+        "lifecycle-active"
+      ],
+      "description": "Independent document engineering product",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/EducationDataProduct-au",
+      "proposed_topics": [
+        "domain-education",
+        "product-goodturn",
+        "role-application",
+        "lifecycle-review"
+      ],
+      "description": "Education pathway product; Goodturn ownership to verify",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/goodturn-brand",
+      "proposed_topics": [
+        "domain-education",
+        "product-goodturn",
+        "role-brand",
+        "lifecycle-active"
+      ],
+      "description": "Brand and commercial IP",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/goodturn-moodle",
+      "proposed_topics": [
+        "domain-education",
+        "product-goodturn",
+        "role-application",
+        "lifecycle-active"
+      ],
+      "description": "Moodle learning platform",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/tafe-browser-mcp",
+      "proposed_topics": [
+        "domain-education",
+        "role-integration",
+        "lifecycle-active"
+      ],
+      "description": "Independent TAFE Browser MCP service",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/pechakucha-studio-private",
+      "proposed_topics": [
+        "domain-product",
+        "product-pechakucha",
+        "role-application",
+        "lifecycle-active"
+      ],
+      "description": "Presentation application",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/Portfolio",
+      "proposed_topics": [
+        "domain-portfolio",
+        "role-showcase",
+        "lifecycle-active"
+      ],
+      "description": "Curated professional portfolio index",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/Advanced-Power-BI-Projects",
+      "proposed_topics": [
+        "domain-portfolio",
+        "role-showcase",
+        "lifecycle-active"
+      ],
+      "description": "Power BI showcase and source assets",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/acnc-nonprofit-analytics-study-case",
+      "proposed_topics": [
+        "domain-research",
+        "role-case-study",
+        "lifecycle-active"
+      ],
+      "description": "Nonprofit analytics case study",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/LittleGrumble.github.io",
+      "proposed_topics": [
+        "domain-web",
+        "role-website",
+        "lifecycle-review"
+      ],
+      "description": "Verify DNS and Pages before any archival",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/agentskills",
+      "proposed_topics": [
+        "domain-reference",
+        "role-upstream-reference",
+        "lifecycle-reference"
+      ],
+      "description": "External agent skills spec and SDK",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/ui",
+      "proposed_topics": [
+        "domain-reference",
+        "role-upstream-reference",
+        "lifecycle-reference"
+      ],
+      "description": "External UI library reference",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/stripe-python",
+      "proposed_topics": [
+        "domain-reference",
+        "role-upstream-reference",
+        "lifecycle-reference"
+      ],
+      "description": "External payments SDK reference",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/skills-idea-to-merge-with-the-copilot-app",
+      "proposed_topics": [
+        "domain-learning",
+        "role-training",
+        "lifecycle-review"
+      ],
+      "description": "GitHub Skills exercise",
+      "applied": false
+    },
+    {
+      "name": "OurChappy/skills-copilot-codespaces-vscode",
+      "proposed_topics": [
+        "domain-learning",
+        "role-training",
+        "lifecycle-review"
+      ],
+      "description": "Empty learning repository",
+      "applied": false
+    }
+  ],
+  "issue_pr_labels": [
+    {
+      "name": "type:bug",
+      "color": "d73a4a",
+      "description": "Broken behaviour requiring correction"
+    },
+    {
+      "name": "type:feature",
+      "color": "a2eeef",
+      "description": "New or enhanced functionality"
+    },
+    {
+      "name": "type:docs",
+      "color": "0075ca",
+      "description": "Documentation only"
+    },
+    {
+      "name": "type:refactor",
+      "color": "c5def5",
+      "description": "Internal restructuring without intended behaviour change"
+    },
+    {
+      "name": "type:security",
+      "color": "b60205",
+      "description": "Security or privacy work"
+    },
+    {
+      "name": "type:chore",
+      "color": "ededed",
+      "description": "Maintenance and housekeeping"
+    },
+    {
+      "name": "area:registry",
+      "color": "1d76db",
+      "description": "Central registry or source identity"
+    },
+    {
+      "name": "area:automation",
+      "color": "1d76db",
+      "description": "Scheduled jobs, scripts and Housekeeping"
+    },
+    {
+      "name": "area:integration",
+      "color": "1d76db",
+      "description": "External API/MCP/connector interfaces"
+    },
+    {
+      "name": "area:app",
+      "color": "1d76db",
+      "description": "User-facing application"
+    },
+    {
+      "name": "area:ci",
+      "color": "1d76db",
+      "description": "Build, test and GitHub Actions"
+    },
+    {
+      "name": "area:data",
+      "color": "1d76db",
+      "description": "Data model, migrations, pipelines"
+    },
+    {
+      "name": "risk:low",
+      "color": "0e8a16",
+      "description": "Isolated, reversible, verified low risk"
+    },
+    {
+      "name": "risk:medium",
+      "color": "fbca04",
+      "description": "Requires explicit integration review"
+    },
+    {
+      "name": "risk:high",
+      "color": "d93f0b",
+      "description": "Authentication, cross-system or operational risk"
+    },
+    {
+      "name": "risk:production",
+      "color": "b60205",
+      "description": "Can affect live services or persistent records"
+    },
+    {
+      "name": "status:needs-evidence",
+      "color": "fef2c0",
+      "description": "Unverified assumptions or acceptance evidence"
+    },
+    {
+      "name": "status:blocked",
+      "color": "b60205",
+      "description": "Dependency or approval prevents progress"
+    },
+    {
+      "name": "status:ready-for-review",
+      "color": "0e8a16",
+      "description": "Review evidence attached, not automatically mergeable"
+    },
+    {
+      "name": "migration:assessment",
+      "color": "bfd4f2",
+      "description": "Evaluating source and target"
+    },
+    {
+      "name": "migration:consumer-check",
+      "color": "bfd4f2",
+      "description": "Discovering active consumers and references"
+    },
+    {
+      "name": "migration:cutover-proposal",
+      "color": "f9d0c4",
+      "description": "Proposed cutover requiring approval"
+    }
+  ]
+}
